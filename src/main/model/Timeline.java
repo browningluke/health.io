@@ -24,12 +24,12 @@ public class Timeline {
         today = generateDateCodeOfSelectedDate();
         selectedDate = today;
 
-        dayList = loadDayList();
+        dayList = loadDayList(); // dayList will always be null until loading is implemented.
 
-        if (dayList == null) {
-            dayList = new ArrayList<>();
-            firstTimeCreate();
-        }
+        //if (dayList == null) {
+        dayList = new ArrayList<>();
+        firstTimeCreate();
+        //}
     }
 
     /*
@@ -147,15 +147,17 @@ public class Timeline {
         return null;
     }
 
+    // REQUIRES: contains(selectedDate) is true
     // EFFECTS: returns a *reference* to the currently selected date.
     //          returns null if there is no date with such a DayCode.
     public Day getDay() {
+        Day selectedDay = null;
         for (Day d : dayList) {
             if (d.getDateCode().equals(selectedDate)) {
-                return d;
+                selectedDay = d;
             }
         }
-        return null;
+        return selectedDay;
     }
 
     // EFFECTS: returns a list containing all Day instances in the current week.
