@@ -11,7 +11,9 @@ public class Mood {
     private int moodScore;
     private ArrayList<Activity> activityList;
 
-
+    // MODIFIES: this
+    // EFFECTS: creates a new Mood instance with its own activityList,
+    //          sets the moodScore to -1 as a default.
     public Mood() {
         moodScore = -1;
         activityList = new ArrayList<>();

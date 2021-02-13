@@ -48,7 +48,8 @@ public class MoodTest {
         assertEquals(1, m1.getActivityListLength());
         assertTrue(m1.containsActivity("test1"));
         assertFalse(m1.containsActivity("test2"));
-
+        assertTrue(m1.getActivityList().contains(a1));
+        assertFalse(m1.getActivityList().contains(a2));
 
         m1.addActivity(a2);
         assertEquals(2, m1.getActivityListLength());
@@ -91,6 +92,9 @@ public class MoodTest {
         m1.addActivity(a1);
         assertTrue(m1.containsActivity("test1"));
         assertFalse(m1.containsActivity("test2"));
+        m1.addActivity(a2);
+        assertTrue(m1.containsActivity("test1"));
+        assertTrue(m1.containsActivity("test2"));
     }
 
 }
