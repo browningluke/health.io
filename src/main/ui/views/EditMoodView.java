@@ -8,6 +8,9 @@ public class EditMoodView extends AbstractView {
 
     private final Mood selectedMood;
 
+    // MODIFIES: this
+    // EFFECTS: creates a new instance of a EditMoodView, calls the AbstractView constructor and
+    //          sets the variables it needs to draw the edit screen.
     public EditMoodView(Timeline tm, SelectedStat stat) {
         super(tm, stat);
         selectedMood = tm.getDay().getMood((
@@ -16,6 +19,8 @@ public class EditMoodView extends AbstractView {
 
 
     @Override
+    // EFFECTS: prints out the Strings returned from the helper functions to draw the view,
+    //          as well as drawing the activities panel below it.
     public void drawView() {
         System.out.println(drawStatsPanel());
         System.out.println(drawEditPanel());
@@ -23,6 +28,7 @@ public class EditMoodView extends AbstractView {
         new ActivitiesView(selectedMood).drawView();
     }
 
+    // EFFECTS: returns the String containing the header + footer for the edit panel.
     private String drawEditPanel() {
         String panelString = "|             Editing Mood %s             |\n"
                            + "|                                        |\n";
@@ -36,6 +42,7 @@ public class EditMoodView extends AbstractView {
                 (stat == SelectedStat.MOOD1) ? 1 : 2);
     }
 
+    // EFFECTS: returns the String containing the selected mood score highlighted.
     private String handleSelectedMoodScore() {
         String panelString = "";
         switch (selectedMood.getMoodScore()) {

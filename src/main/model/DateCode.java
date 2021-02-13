@@ -6,6 +6,9 @@ public class DateCode {
     private final int month;
     private final int year;
 
+
+    // MODIFIES: this
+    // EFFECTS: creates a new DateCode instance with a specified year, month and date.
     public DateCode(int year, int month, int date) {
         this.date = date;
         this.month = month;

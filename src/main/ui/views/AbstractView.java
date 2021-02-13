@@ -13,6 +13,9 @@ public abstract class AbstractView implements View {
     private final DateCode date;
     protected SelectedStat stat;
 
+    // MODIFIES: this
+    // EFFECTS: defines the top-level view and sets the necessary variables
+    //          to print the stats panel.
     public AbstractView(Timeline tm, SelectedStat stat) {
         this.date = tm.getSelectedDateCode();
         this.mood1 = tm.getDay().getMood(0).getUIMoodString();
@@ -21,6 +24,8 @@ public abstract class AbstractView implements View {
         this.stat = stat;
     }
 
+    // EFFECTS: returns a String containing the stats panel with the values
+    //          substituted into it.
     protected String drawStatsPanel() {
         String panelString = "|-  =  x|---%s---------------------|\n"
                            + handleSelectedStat();
@@ -29,6 +34,7 @@ public abstract class AbstractView implements View {
         return String.format(panelString, MoodWindow.PROJECTNAME);
     }
 
+    // EFFECTS: returns a different string depending on which stat is selected.
     private String handleSelectedStat() {
         String panelString = "";
         switch (stat) {
@@ -56,5 +62,6 @@ public abstract class AbstractView implements View {
                 sleep);
     }
 
+    // EFFECTS: instructs the subclasses that they must implement a drawView method.
     public abstract void drawView();
 }

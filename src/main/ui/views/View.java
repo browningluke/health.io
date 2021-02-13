@@ -2,6 +2,6 @@ package ui.views;
 
 public interface View {
 
-    void drawView();
+    void drawView(); // All subclasses must draw themselves.
 
 }

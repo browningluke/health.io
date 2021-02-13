@@ -13,6 +13,10 @@ public class SummaryView extends AbstractView {
     private DateCode weekBeginningCode;
     private DateCode weekEndCode;
 
+
+    // MODIFIES: this
+    // EFFECTS: creates a new instance of a SummaryView, calls the AbstractView constructor and
+    //          sets the variables it needs to draw a timeline.
     public SummaryView(Timeline tn, SelectedStat stat) {
         super(tn, stat);
         this.dayWeekList = tn.getAllDaysInCurrentWeek();
@@ -21,14 +25,14 @@ public class SummaryView extends AbstractView {
     }
 
     @Override
+    // EFFECTS: prints out the Strings returned from the helper functions to draw the view.
     public void drawView() {
         System.out.println(drawStatsPanel());
         System.out.println(drawSummaryPanel());
     }
 
-
-
-
+    // EFFECTS: returns a string containing the static header and footer for the timeline,
+    //          also calls the helper functions to dynamically add the stats.
     private String drawSummaryPanel() {
         String panelString = "|          < week %s-%s >          |\n"
                            + "|                                        |";
@@ -57,6 +61,8 @@ public class SummaryView extends AbstractView {
 
     }
 
+    // EFFECTS: takes a list of rows and, for each day, calls the helper functions
+    //          required to draw the stats for said day.
     private void addDayStatsToRows(ArrayList<String> rows) {
         for (Day d : dayWeekList) {
             if (d == null) {
@@ -75,6 +81,8 @@ public class SummaryView extends AbstractView {
         }
     }
 
+    // EFFECTS: takes the height of the two bars, and a list of rows,
+    //          adds the mood bars to the rows for a specific day.
     private void addMoodToRow(int mood0Height, int mood1Height, ArrayList<String> rows) {
         for (int i = 0; i < rows.size(); i++) {
             if (mood0Height > 0 && mood1Height > 0) {
@@ -89,6 +97,8 @@ public class SummaryView extends AbstractView {
         }
     }
 
+    // EFFECTS: takes the height of the sleep bar, and a list of rows,
+    //          adds the sleep bar to the rows for a specific day.
     private void addSleepToRow(int sleepHeight, ArrayList<String> rows) {
         if (sleepHeight >= 0) {
             for (int i = 0; i < rows.size(); i++) {
@@ -106,6 +116,7 @@ public class SummaryView extends AbstractView {
         }
     }
 
+    // EFFECTS: helper function. Replaces a row in the rowlist with a new string.
     private void appendToRowInRowList(String text, int index, ArrayList<String> rows) {
         String row = rows.get(index);
         row += text;

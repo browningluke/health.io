@@ -19,11 +19,16 @@ public class MoodWindow {
     Timeline timeline;
     Window currentWindow;
 
+
+    // MODIFIES: this
+    // EFFECTS: creates a new Timeline and sets the current window to the Summary View.
     public MoodWindow() {
         timeline = new Timeline();
         currentWindow = Window.MAIN;
     }
 
+    // EFFECTS: calls the necessary functions to determine which commands can be called,
+    //          print these on the screen, and then handle user input.
     public void drawUI() {
         drawViews();
 
@@ -32,6 +37,8 @@ public class MoodWindow {
         handleCommands(availableActions);
     }
 
+    // EFFECTS: create a new instance of one of the AbstractView subclasses depending on which
+    //          window we have selected, then draw it.
     private void drawViews() {
         switch (currentWindow) {
             case MAIN:
@@ -49,6 +56,8 @@ public class MoodWindow {
         }
     }
 
+    // EFFECTS: returns a list of Actions that determine what the user is able to do
+    //          on the selected window.
     private ArrayList<Actions> determineAvailableCommands() {
         ArrayList<Actions> actions = new ArrayList<>();
 
@@ -76,6 +85,7 @@ public class MoodWindow {
         return actions;
     }
 
+    // EFFECTS: print all available commands to the screen.
     private void printCommands(ArrayList<Actions> availableActions) {
         String message = "";
 
@@ -101,6 +111,7 @@ public class MoodWindow {
         System.out.println(message);
     }
 
+    // EFFECTS: print all available commands relating to the Main (Summary) window to the screen.
     private String printMainWindowCommands(ArrayList<Actions> availableActions) {
         String message = "";
 
@@ -125,6 +136,8 @@ public class MoodWindow {
         return message;
     }
 
+    // EFFECTS: determines which command to run based on available actions and user input.
+    //          Quit is always available, and other helper functions are called.
     private void handleCommands(ArrayList<Actions> availableActions) {
         Scanner in = new Scanner(System.in);
         String s = in.nextLine();
@@ -141,6 +154,9 @@ public class MoodWindow {
         drawUI();
     }
 
+    // MODIFIES: this, timeline
+    // EFFECTS: if the user entered a movement command, either move around the timeline or
+    //          change active window.
     private void handleMovement(ArrayList<Actions> availableActions, String s) {
         if (availableActions.contains(Actions.GOBACKWARD) && s.equals("<")) {
             timeline.goBackOneDay();
@@ -163,6 +179,7 @@ public class MoodWindow {
         }
     }
 
+    // EFFECTS: if the user entered an update command, move to the appropriate update window.
     private void handleUpdateValues(ArrayList<Actions> availableActions, String s) {
         if (availableActions.contains(Actions.UPDATEMOODVALUE) && s.equals("u")) {
             handleEditMood((currentWindow == Window.EDIT_MOOD1) ? 0 : 1);
@@ -175,6 +192,9 @@ public class MoodWindow {
         }
     }
 
+    // MODIFIES: this, timeline
+    // EFFECTS: prompts the user to enter a new mood value for the currently selected mood,
+    //          will keep looping until user enters value between 1 and 5.
     private void handleEditMood(int moodIndex) {
         Scanner in =  new Scanner(System.in);
         System.out.println("Please enter a new mood score (between 1 and 5): ");
@@ -186,6 +206,9 @@ public class MoodWindow {
         handleEditMood(moodIndex);
     }
 
+    // MODIFIES: this, timeline
+    // EFFECTS: prompts the user to enter a new sleep value for selected day,
+    //          will keep looping until user enters value between 0 and 24.
     private void handleEditSleep() {
         Scanner in =  new Scanner(System.in);
         System.out.println("Please enter a new sleep time: ");
@@ -197,6 +220,9 @@ public class MoodWindow {
         handleEditSleep();
     }
 
+    // MODIFIES: this, timeline
+    // EFFECTS: prompts the user to enter a comma separated list of activities they wish
+    //          to toggle. Will keep looping until user enters valid activity.
     private void handleEditActivities(int moodIndex) {
         Scanner in =  new Scanner(System.in);
         System.out.println("Please enter all activities you wish to toggle, "
@@ -226,6 +252,9 @@ public class MoodWindow {
         }
     }
 
+
+    // EFFECTS: gets a new CSV object from timeline, generates the csv string
+    //          and then prints the result to the screen.
     private void handleExport(ArrayList<Actions> availableActions, String s) {
         if (availableActions.contains(Actions.EXPORT) && s.equals("x")) {
             CSV exportCSV = timeline.getCSV();
