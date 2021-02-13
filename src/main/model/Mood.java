@@ -48,6 +48,11 @@ public class Mood {
         return false;
     }
 
+    // EFFECTS: returns the activityList
+    public ArrayList<Activity> getActivityList() {
+        return activityList;
+    }
+
     // EFFECTS: converts moodScore to a String, unless it is -1
     //          where it returns "x".
     public String getUIMoodString() {

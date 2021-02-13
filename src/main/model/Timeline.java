@@ -1,5 +1,6 @@
 package model;
 
+import model.io.CSV;
 import model.io.Loader;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.TimeZone;
 
 public class Timeline {
 
-    private List<Day> dayList;
+    private ArrayList<Day> dayList;
     private final Calendar calendar;
     private final DateCode today;
     private DateCode selectedDate;
@@ -203,6 +204,11 @@ public class Timeline {
     /*
         Getters & Setters
      */
+
+    // EFFECTS: returns an exported CSV object
+    public CSV getCSV() {
+        return new CSV(dayList);
+    }
 
     // EFFECTS: returns the size of the dayList.
     public int getDayListLength() {
