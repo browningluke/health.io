@@ -7,49 +7,43 @@ public class Day {
 
     public static final int MAXMOODS = 2;
 
-    private String dateID; // some way of encoding the date
-
-
+    private DateCode dateCode;
     private List<Mood> moodList; // Should contain 2
     private int sleepHours; // Initialized to -1
 
-    public Day(String id) {
-        dateID = id;
-        moodList = new ArrayList<>();
+
+    // MODIFIES: this
+    // EFFECTS: creates a new Day object and fills the moodList
+    //          with empty moods which can be updated later.
+    public Day(DateCode id) {
+        dateCode = id;
         sleepHours = -1;
-    }
 
+        moodList = new ArrayList<>();
 
-    // EFFECTS: returns true if a mood was successfully added.
-    public boolean addMood(Mood newmood) {
-        if (moodList.size() < MAXMOODS) {
-            moodList.add(newmood);
-            return true;
+        for (int i = 0; i < MAXMOODS; i++) {
+            moodList.add(new Mood());
         }
-        return false;
     }
 
-    // REQUIRES: moodList.length > 0
-    // EFFECTS: replaces mood in moodList, first list is index 0.
-    public void replaceMood(int pos, Mood newmood) {
-        moodList.add(pos, newmood);
-        moodList.remove(pos + 1);
-    }
-
-    // REQUIRES: pos < moodList.size()
-    // EFFECTS:
+    // REQUIRES: 0 <= pos < moodList.size()
+    // EFFECTS: returns a *reference* to a mood at position pos.
+    //          The reference can be updated directly.
     public Mood getMood(int pos) {
         return moodList.get(pos);
     }
 
-    // GETTERS AND SETTERS
+    /*
+        GETTERS AND SETTERS
+     */
 
-    public void setSleepHours(int sh) {
-        sleepHours = sh;
-    }
-
-    public int getMoodListLength() {
-        return moodList.size();
+    // EFFECTS: returns sleepHours as a string if initialized,
+    //          else returns an "x".
+    public String getUISleepHours() {
+        if (sleepHours == -1) {
+            return "x";
+        }
+        return Integer.toString(sleepHours);
     }
 
     // EFFECTS: returns sleepHours if sleepHours is initialized, else -1
@@ -57,8 +51,19 @@ public class Day {
         return sleepHours;
     }
 
-    public String getDateID() {
-        return dateID;
+    // EFFECTS: updates sleepHours value with sh.
+    public void setSleepHours(int sh) {
+        sleepHours = sh;
+    }
+
+    // EFFECTS: returns the number of items (moods) in moodList.
+    public int getMoodListLength() {
+        return moodList.size();
+    }
+
+    // EFFECTS: returns the DateCode associated with this day.
+    public DateCode getDateCode() {
+        return dateCode;
     }
 
 }
