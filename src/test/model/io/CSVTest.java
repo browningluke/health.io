@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CSVTest {
 
-    static final String CSVHEADER = "date, mood1, mood2, sleep-time, mood1-activities, mood2-activities\n";
+    public static final String CSVHEADER = "date, mood1, mood2, sleep-time, mood1-activities, mood2-activities\n";
 
     CSV csv;
     ArrayList<Day> dayList;

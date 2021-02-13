@@ -1,4 +1,4 @@
-package model;
+package model.activities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
