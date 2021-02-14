@@ -5,10 +5,11 @@ import model.activities.Activity;
 
 import java.util.ArrayList;
 
+// Represents a CSV parser that can convert a list of days to a valid CSV string.
 public class CSV {
 
-    private final ArrayList<Day> dayList;
-    private String csvString;
+    private final ArrayList<Day> dayList;   // Contains the list of days to export.
+    private String csvString;               // Contains the valid exported CSV string.
 
     // MODIFIES: this
     // EFFECTS: creates a new CSV instance with access to the entire dayList.

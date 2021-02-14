@@ -4,6 +4,7 @@ import model.Day;
 
 import java.util.ArrayList;
 
+// Represents a loader that will convert a file to a list of days.
 public class Loader {
 
     /*
@@ -11,8 +12,14 @@ public class Loader {
      */
 
 
+    // MODIFIES: this
+    // EFFECTS: current: none
+    //          desired: creates a new Loader with a specified path.
     public Loader() { }
 
+    // MODIFIES: this
+    // EFFECTS: current: none
+    //          desired: loads a list of Days from a file at the path.
     public ArrayList<Day> load() {
         return null;
     }

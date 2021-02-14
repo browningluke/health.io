@@ -4,12 +4,13 @@ import model.activities.Activity;
 
 import java.util.ArrayList;
 
+// Represents a mood, which has a happiness score and a list of activities.
 public class Mood {
 
-    public static final int MAXMOODSCORE = 5;
+    public static final int MAXMOODSCORE = 5;   // The max value that the moodScore can be
 
-    private int moodScore;
-    private ArrayList<Activity> activityList;
+    private int moodScore;                      // The current mood score for this Mood.
+    private ArrayList<Activity> activityList;   // The list of activities for this Mood.
 
     // MODIFIES: this
     // EFFECTS: creates a new Mood instance with its own activityList,

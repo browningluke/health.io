@@ -3,13 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a day that contains moods and sleep value. It has a unique ID (DateCode) which identifies it.
 public class Day {
 
-    public static final int MAXMOODS = 2;
+    public static final int MAXMOODS = 2;   // Number of moods per day.
 
-    private DateCode dateCode;
-    private List<Mood> moodList; // Should contain 2
-    private int sleepHours; // Initialized to -1
+    private DateCode dateCode;              // The unique ID for this day.
+    private List<Mood> moodList;            // The list containing the moods. Should contain 2
+    private int sleepHours;                 // The number of hours slept. Initialized to -1
 
 
     // MODIFIES: this

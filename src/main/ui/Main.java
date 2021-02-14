@@ -5,7 +5,6 @@ public class Main {
         System.out.println("Legend for CLI version:\n"
                          + "M: Mood, S: Sleep");
 
-        MoodWindow mw = new MoodWindow();
-        mw.drawUI();
+        new HealthIO();
     }
 }

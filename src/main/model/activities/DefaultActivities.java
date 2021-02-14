@@ -3,9 +3,10 @@ package model.activities;
 import java.util.ArrayList;
 import java.util.Locale;
 
+// Represents the default activities that will show when a user edits a mood.
 public class DefaultActivities {
 
-    private final ArrayList<Activity> activityList;
+    private final ArrayList<Activity> activityList;     // The list containing the default activities.
 
     // MODIFIES: this
     // EFFECTS: create DefaultActivities instance

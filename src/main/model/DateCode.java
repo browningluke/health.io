@@ -1,10 +1,11 @@
 package model;
 
+// Represents a specific date, which can be used as an ID for the Day object.
 public class DateCode {
 
-    private final int date;
-    private final int month;
-    private final int year;
+    private final int date;     // The date of the month that the DateCode represents.
+    private final int month;    // The month of the year that the DateCode represents.
+    private final int year;     // The year that the DateCode represents.
 
 
     // MODIFIES: this

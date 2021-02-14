@@ -13,18 +13,28 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class MoodWindow {
+// The main Window that controls when displaying views and handling commands.
+public class HealthIO {
 
-    public static final String PROJECTNAME = "HealthIO";
-    Timeline timeline;
-    Window currentWindow;
+    public static final String PROJECTNAME = "HealthIO";    // Contains the static application name
+    Timeline timeline;                                      // Timeline for storing Days and moving around.
+    Window currentWindow;                                   // The currently selected window (combination of views).
 
 
     // MODIFIES: this
     // EFFECTS: creates a new Timeline and sets the current window to the Summary View.
-    public MoodWindow() {
+    public HealthIO() {
         timeline = new Timeline();
         currentWindow = Window.MAIN;
+        runHealthIO();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: starts the infinite loop and runs the application.
+    public void runHealthIO() {
+        while (true) {
+            drawUI(); // Can exit when user enters "q", thus calls System.exit();
+        }
     }
 
     // EFFECTS: calls the necessary functions to determine which commands can be called,
@@ -105,7 +115,9 @@ public class MoodWindow {
             message += "Press b to go back to the main menu\n";
         }
 
-        message += printMainWindowCommands(availableActions);
+        if (currentWindow == Window.MAIN) {
+            message += printMainWindowCommands(availableActions);
+        }
 
         message += "Press q to quit\n";
         System.out.println(message);
@@ -117,10 +129,14 @@ public class MoodWindow {
 
         if (availableActions.contains(Actions.GOBACKWARD)) {
             message += "Press < to go back one day\n";
+        } else {
+            message += "Press < to create a day one day back.\n";
         }
 
         if (availableActions.contains(Actions.GOFORWARD)) {
             message += "Press > to go forward one day\n";
+        } else {
+            message += "Press > to create a day one day forward.\n";
         }
 
         if (availableActions.contains(Actions.EDITSTATS)) {
@@ -150,19 +166,32 @@ public class MoodWindow {
         handleMovement(availableActions, s);
         handleUpdateValues(availableActions, s);
         handleExport(availableActions, s);
-
-        drawUI();
     }
 
     // MODIFIES: this, timeline
     // EFFECTS: if the user entered a movement command, either move around the timeline or
-    //          change active window.
+    //          call a helper function to change active window.
     private void handleMovement(ArrayList<Actions> availableActions, String s) {
-        if (availableActions.contains(Actions.GOBACKWARD) && s.equals("<")) {
+        if (currentWindow == Window.MAIN && s.equals("<")) {
+            if (!availableActions.contains(Actions.GOBACKWARD)) {
+                timeline.createDayOneDayBack();
+            }
             timeline.goBackOneDay();
-        } else if (availableActions.contains(Actions.GOFORWARD) && s.equals(">")) {
+
+        } else if (currentWindow == Window.MAIN && s.equals(">")) {
+            if (!availableActions.contains(Actions.GOFORWARD)) {
+                timeline.createDayOneDayForward();
+            }
             timeline.goForwardOneDay();
-        }  else if (availableActions.contains(Actions.BACK) && s.equals("b")) {
+        } else {
+            handleChangeWindow(availableActions, s);
+        }
+    }
+
+    // MODIFIES: this, timeline
+    // EFFECTS: if the user entered a movement command, change active window.
+    private void handleChangeWindow(ArrayList<Actions> availableActions, String s) {
+        if (availableActions.contains(Actions.BACK) && s.equals("b")) {
             currentWindow = Window.MAIN;
         } else if (availableActions.contains(Actions.EDITSTATS)) {
             switch (s) {

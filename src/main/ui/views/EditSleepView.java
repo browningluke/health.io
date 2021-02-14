@@ -3,6 +3,7 @@ package ui.views;
 import model.Timeline;
 import ui.enums.SelectedStat;
 
+// The View allowing a user to edit the sleep value of the currently selected day.
 public class EditSleepView extends AbstractView {
 
     // MODIFIES: this

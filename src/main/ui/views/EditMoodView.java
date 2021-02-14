@@ -4,9 +4,10 @@ import model.Mood;
 import model.Timeline;
 import ui.enums.SelectedStat;
 
+// The View allowing a user to edit the selected mood value of the currently selected day.
 public class EditMoodView extends AbstractView {
 
-    private final Mood selectedMood;
+    private final Mood selectedMood;    // The Mood instance the user wishes to edit.
 
     // MODIFIES: this
     // EFFECTS: creates a new instance of a EditMoodView, calls the AbstractView constructor and

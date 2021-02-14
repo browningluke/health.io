@@ -4,6 +4,7 @@ import model.Mood;
 import model.activities.Activity;
 import model.activities.DefaultActivities;
 
+// The View that displays all available activities, and if they are currently selected.
 public class ActivitiesView implements View {
 
     private final Mood selectedMood;

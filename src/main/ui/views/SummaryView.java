@@ -7,11 +7,12 @@ import ui.enums.SelectedStat;
 
 import java.util.ArrayList;
 
+// The View displaying the mood + sleep summary for the currently selected week.
 public class SummaryView extends AbstractView {
 
-    private ArrayList<Day> dayWeekList;
-    private DateCode weekBeginningCode;
-    private DateCode weekEndCode;
+    private ArrayList<Day> dayWeekList;     // Array containing all Day objects in current week
+    private DateCode weekBeginningCode;     // DateCode for the beginning of the week (Sunday)
+    private DateCode weekEndCode;           // DateCode for the end of the week (Saturday)
 
 
     // MODIFIES: this

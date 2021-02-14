@@ -3,9 +3,10 @@ package ui.views;
 import model.DateCode;
 import model.Mood;
 import model.Timeline;
-import ui.MoodWindow;
+import ui.HealthIO;
 import ui.enums.SelectedStat;
 
+// A View that draws the header for all subclasses. Displays stat values and selected stat.
 public abstract class AbstractView implements View {
     private final String mood1;
     private final String mood2;
@@ -31,7 +32,7 @@ public abstract class AbstractView implements View {
                            + handleSelectedStat();
         panelString += "|----------------------------------------|";
 
-        return String.format(panelString, MoodWindow.PROJECTNAME);
+        return String.format(panelString, HealthIO.PROJECTNAME);
     }
 
     // EFFECTS: returns a different string depending on which stat is selected.

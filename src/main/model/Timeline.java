@@ -8,12 +8,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+// Represents a timeline that associates a list of days with a human calendar.
 public class Timeline {
 
-    private ArrayList<Day> dayList;
-    private final Calendar calendar;
-    private final DateCode today;
-    private DateCode selectedDate;
+    private ArrayList<Day> dayList;     // A list containing all days the user has created.
+    private final Calendar calendar;    // A Java Calendar for associating a Day with a date.
+    private final DateCode today;       // The DateCode representing today. Starting place for timeline.
+    private DateCode selectedDate;      // The DateCode for the selected date when moving around the timeline.
 
 
     // MODIFIES: this
