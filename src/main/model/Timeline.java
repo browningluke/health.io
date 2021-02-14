@@ -86,6 +86,24 @@ public class Timeline {
     }
 
 
+    // Creating new days
+
+    // REQUIRES: !canGoBackOneDay
+    // MODIFIES: this
+    // EFFECTS: creates a new day and adds it to the front of dayList
+    public void createDayOneDayBack() {
+        DateCode dateCodeOneDayBack = getDateCodeOneDayBack();
+        dayList.add(0, new Day(dateCodeOneDayBack));
+    }
+
+    // REQUIRES: !canGoForwardOneDay
+    // MODIFIES: this
+    // EFFECTS: creates a new day and adds it to the end of dayList
+    public void createDayOneDayForward() {
+        DateCode dateCodeOneDayForward = getDateCodeOneDayForward();
+        dayList.add(new Day(dateCodeOneDayForward));
+    }
+
     // Moving around
 
     // MODIFIES: this

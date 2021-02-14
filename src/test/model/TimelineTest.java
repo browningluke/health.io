@@ -170,4 +170,29 @@ public class TimelineTest {
 
     }
 
+    @Test
+    void testCreateDayOneDayBack() {
+        assertFalse(tl.canGoBackOneDay());
+        assertTrue(tl.canGoForwardOneDay());
+        DateCode dateCodeOneDayBack = tl.getDateCodeOneDayBack();
+
+        assertFalse(tl.contains(dateCodeOneDayBack));
+        tl.createDayOneDayBack();
+        assertEquals(3, tl.getDayListLength());
+        assertTrue(tl.contains(dateCodeOneDayBack));
+    }
+
+    @Test
+    void testCreateDayOneDayForward() {
+        assertFalse(tl.canGoBackOneDay());
+        assertTrue(tl.canGoForwardOneDay());
+        tl.goForwardOneDay();
+        DateCode dateCodeOneDayForward = tl.getDateCodeOneDayForward();
+
+        assertFalse(tl.contains(dateCodeOneDayForward));
+        tl.createDayOneDayForward();
+        assertEquals(3, tl.getDayListLength());
+        assertTrue(tl.contains(dateCodeOneDayForward));
+    }
+
 }
