@@ -360,22 +360,12 @@ public class HealthIO {
     // EFFECTS:
     private void saveTimeline() {
         try {
-            jsonWriter.createFile();
-        } catch (IOException e) {
-            System.out.println("Unable to save to file: " + JSONSTORE);
-            return;
-        }
-
-        try {
             jsonWriter.open();
             jsonWriter.write(timeline);
             jsonWriter.close();
             System.out.println("Saved timeline to: " + JSONSTORE);
         } catch (FileNotFoundException f) {
-            // This block should never run under ideal conditions,
-            // since we make sure the file exists above.
-
-            System.out.println("File does not exist at: " + JSONSTORE);
+            System.out.println("Unable to write to file: " + JSONSTORE);
         }
     }
 
