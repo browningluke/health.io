@@ -19,13 +19,13 @@ import java.util.Scanner;
 public class HealthIO {
 
     public static final String PROJECTNAME = "HealthIO";    // Contains the static application name
-    public static final String JSONSTORE = "./data/timeline.json";
+    public static final String JSONSTORE = "./data/timeline.json"; // The location of the JSON file.
 
     private Timeline timeline;                              // Timeline for storing Days and moving around.
     private Window currentWindow;                           // The currently selected window (combination of views).
 
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;                          // The json writer to save timeline to file.
+    private JsonReader jsonReader;                          // The json reader to read timeline from file.
 
 
     // MODIFIES: this
@@ -100,6 +100,8 @@ public class HealthIO {
         return actions;
     }
 
+    // EFFECTS: returns a list of Actions that determine what the user is able to do
+    //          on the main window. Helper method for determineAvailableCommands.
     private ArrayList<Actions> determineMainWindowCommands() {
         ArrayList<Actions> actions = new ArrayList<>();
 
@@ -199,7 +201,7 @@ public class HealthIO {
         String s = in.nextLine();
 
         if (s.equals("q")) {
-            new Saver().save();
+            saveTimeline(); // Save on quit.
             System.exit(0); // Exit no matter what
         }
 
@@ -321,6 +323,8 @@ public class HealthIO {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: if the user entered a valid IO command, call the appropriate helper method.
     private void handleIO(ArrayList<Actions> availableActions, String s) {
         if (availableActions.contains(Actions.EXPORT) && s.equals("x")) {
             saveToCSV();
@@ -345,19 +349,7 @@ public class HealthIO {
         System.out.println(exportCSV.save());
     }
 
-    // EFFECTS:
-    private void saveTimeline() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(timeline);
-            jsonWriter.close();
-            System.out.println("Saved timeline to " + JSONSTORE);
-        } catch (FileNotFoundException e) {
-            System.out.println("File does not exist"); //TODO: add file creation
-        }
-    }
-
-    // EFFECTS:
+    // EFFECTS: saves the Timeline instance to a file at JSONSTORE.
     private void saveTimeline() {
         try {
             jsonWriter.open();
@@ -369,6 +361,7 @@ public class HealthIO {
         }
     }
 
+    // EFFECTS: loads the Timeline instance from a file at JSONSTORE.
     private void loadTimeline() {
         try {
             timeline = jsonReader.read();
@@ -378,6 +371,9 @@ public class HealthIO {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves a blank string to a file at JSONSTORE,
+    //          and creates a new timeline instance.
     private void deleteTimeline() {
         try {
             jsonWriter.open();

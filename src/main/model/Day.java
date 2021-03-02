@@ -51,6 +51,7 @@ public class Day implements Writable {
         Persistence
      */
 
+    // EFFECTS: returns the Day represented as a JSON object.
     public JSONObject toJson() {
         JSONObject jsonDay = new JSONObject();
         jsonDay.put("id", dateCode.toString());

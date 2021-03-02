@@ -14,6 +14,7 @@ public class Activity implements Writable {
         this.activityName = activityName;
     }
 
+    // EFFECTS: returns the Activity represented as a JSON object.
     public JSONObject toJson() {
         JSONObject jsonActivity = new JSONObject();
         jsonActivity.put("name", activityName);

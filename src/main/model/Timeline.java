@@ -37,6 +37,10 @@ public class Timeline implements Writable {
         this.dayList = dayList;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the necessary fields for timeline to keep track of the user's
+    //          currently selected date.
+    //          Uses the JavaVM's default timezone (user's timezone if available otherwise GMT).
     private void setupTimeline() {
         calendar = Calendar.getInstance(TimeZone.getDefault());
         today = generateDateCodeOfSelectedDate();
@@ -214,6 +218,7 @@ public class Timeline implements Writable {
         Persistence
      */
 
+    // EFFECTS: returns the timeline represented as a JSON object.
     public JSONObject toJson() {
         JSONObject jsonTimeline = new JSONObject();
 

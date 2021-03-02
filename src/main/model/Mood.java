@@ -58,6 +58,7 @@ public class Mood implements Writable {
         Persistence
      */
 
+    // EFFECTS: returns the Mood represented as a JSON object.
     public JSONObject toJson() {
         JSONObject jsonMood = new JSONObject();
         jsonMood.put("score", moodScore);
