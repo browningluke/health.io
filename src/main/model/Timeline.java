@@ -2,14 +2,16 @@ package model;
 
 import model.io.CSV;
 import model.io.Loader;
+import org.json.JSONArray;
+import persistence.Writable;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.TimeZone;
 
 // Represents a timeline that associates a list of days with a human calendar.
-public class Timeline {
+public class Timeline implements Writable {
 
     private ArrayList<Day> dayList;     // A list containing all days the user has created.
     private final Calendar calendar;    // A Java Calendar for associating a Day with a date.
@@ -221,6 +223,25 @@ public class Timeline {
 
         return dc;
     }
+
+    /*
+        Persistence
+     */
+
+    public JSONObject toJson() {
+        JSONObject jsonTimeline = new JSONObject();
+
+        JSONArray jsonDays = new JSONArray();
+
+        for (Day d : dayList) {
+            jsonDays.put(d.toJson());
+        }
+
+        jsonTimeline.put("timeline", jsonDays);
+
+        return jsonTimeline;
+    }
+
 
     /*
         Getters & Setters

@@ -1,14 +1,18 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a day that contains moods and sleep value. It has a unique ID (DateCode) which identifies it.
-public class Day {
+public class Day implements Writable {
 
     public static final int MAXMOODS = 2;   // Number of moods per day.
 
-    private DateCode dateCode;              // The unique ID for this day.
+    private final DateCode dateCode;        // The unique ID for this day.
     private List<Mood> moodList;            // The list containing the moods. Should contain 2
     private int sleepHours;                 // The number of hours slept. Initialized to -1
 
@@ -33,6 +37,27 @@ public class Day {
     public Mood getMood(int pos) {
         return moodList.get(pos);
     }
+
+    /*
+        Persistence
+     */
+
+    public JSONObject toJson() {
+        JSONObject jsonDay = new JSONObject();
+        jsonDay.put("id", dateCode.toString());
+        jsonDay.put("sleep", sleepHours);
+
+        JSONArray jsonMoods = new JSONArray();
+
+        for (Mood m : moodList) {
+            jsonMoods.put(m.toJson());
+        }
+
+        jsonDay.put("moods", jsonMoods);
+
+        return jsonDay;
+    }
+
 
     /*
         GETTERS AND SETTERS

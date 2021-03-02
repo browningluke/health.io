@@ -1,11 +1,14 @@
 package model;
 
 import model.activities.Activity;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 
 // Represents a mood, which has a happiness score and a list of activities.
-public class Mood {
+public class Mood implements Writable {
 
     public static final int MAXMOODSCORE = 5;   // The max value that the moodScore can be
 
@@ -50,6 +53,29 @@ public class Mood {
         }
         return false;
     }
+
+    /*
+        Persistence
+     */
+
+    public JSONObject toJson() {
+        JSONObject jsonMood = new JSONObject();
+        jsonMood.put("score", moodScore);
+
+        JSONArray jsonActivities = new JSONArray();
+
+        for (Activity a : activityList) {
+            jsonActivities.put(a.toJson());
+        }
+
+        jsonMood.put("activities", jsonActivities);
+
+        return jsonMood;
+    }
+
+    /*
+        Getters & Setters
+     */
 
     // EFFECTS: returns the activityList
     public ArrayList<Activity> getActivityList() {
