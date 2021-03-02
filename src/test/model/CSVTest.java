@@ -1,9 +1,7 @@
-package model.io;
+package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import model.DateCode;
-import model.Day;
 import model.activities.DefaultActivities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

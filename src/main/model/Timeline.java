@@ -1,7 +1,5 @@
 package model;
 
-import model.io.CSV;
-import model.io.Loader;
 import org.json.JSONArray;
 import persistence.Writable;
 import org.json.JSONObject;
