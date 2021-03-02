@@ -8,6 +8,9 @@ public enum Actions {
     UPDATEMOODVALUE,
     UPDATEACTIVITIES,
     UPDATESLEEPVALUE,
+    SAVE,
+    LOAD,
+    DELETE,
     EXPORT,
     BACK
 }

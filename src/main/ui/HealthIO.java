@@ -6,19 +6,25 @@ import model.activities.Activity;
 import model.activities.DefaultActivities;
 import model.io.CSV;
 import model.io.Saver;
+import persistence.JsonWriter;
 import ui.enums.*;
 import ui.views.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 // The main Window that controls when displaying views and handling commands.
 public class HealthIO {
 
     public static final String PROJECTNAME = "HealthIO";    // Contains the static application name
-    Timeline timeline;                                      // Timeline for storing Days and moving around.
-    Window currentWindow;                                   // The currently selected window (combination of views).
+    public static final String JSONSTORE = "./data/timeline.json";
+
+    private Timeline timeline;                              // Timeline for storing Days and moving around.
+    private Window currentWindow;                           // The currently selected window (combination of views).
+
+    private JsonWriter jsonWriter;
+    //private JsonReader jsonReader;
 
 
     // MODIFIES: this
@@ -26,6 +32,10 @@ public class HealthIO {
     public HealthIO() {
         timeline = new Timeline();
         currentWindow = Window.MAIN;
+
+        jsonWriter = new JsonWriter(JSONSTORE);
+        //jsonReader = new JsonReader(JSONSTORE);
+
         runHealthIO();
     }
 
@@ -66,23 +76,17 @@ public class HealthIO {
         }
     }
 
+    /*
+        Determining Actions
+     */
+
     // EFFECTS: returns a list of Actions that determine what the user is able to do
     //          on the selected window.
     private ArrayList<Actions> determineAvailableCommands() {
         ArrayList<Actions> actions = new ArrayList<>();
 
         if (currentWindow == Window.MAIN) {
-            actions.add(Actions.EDITSTATS);
-            actions.add(Actions.EXPORT);
-
-            if (timeline.canGoBackOneDay()) {
-                actions.add(Actions.GOBACKWARD);
-            }
-
-            if (timeline.canGoForwardOneDay()) {
-                actions.add(Actions.GOFORWARD);
-            }
-
+            actions.addAll(determineMainWindowCommands());
         } else if (currentWindow == Window.EDIT_MOOD1
                 || currentWindow == Window.EDIT_MOOD2) {
             actions.add(Actions.UPDATEMOODVALUE);
@@ -94,6 +98,31 @@ public class HealthIO {
         }
         return actions;
     }
+
+    private ArrayList<Actions> determineMainWindowCommands() {
+        ArrayList<Actions> actions = new ArrayList<>();
+
+        actions.add(Actions.EDITSTATS);
+        actions.add(Actions.SAVE);
+        actions.add(Actions.LOAD);
+        actions.add(Actions.DELETE);
+        actions.add(Actions.EDITSTATS);
+        actions.add(Actions.EXPORT);
+
+        if (timeline.canGoBackOneDay()) {
+            actions.add(Actions.GOBACKWARD);
+        }
+
+        if (timeline.canGoForwardOneDay()) {
+            actions.add(Actions.GOFORWARD);
+        }
+
+        return actions;
+    }
+
+    /*
+        Printing UI
+     */
 
     // EFFECTS: print all available commands to the screen.
     private void printCommands(ArrayList<Actions> availableActions) {
@@ -127,22 +156,28 @@ public class HealthIO {
     private String printMainWindowCommands(ArrayList<Actions> availableActions) {
         String message = "";
 
-        if (availableActions.contains(Actions.GOBACKWARD)) {
-            message += "Press < to go back one day\n";
-        } else {
-            message += "Press < to create a day one day back.\n";
-        }
+        message += "Press < to " + (availableActions.contains(Actions.GOBACKWARD)
+               ? "go back one day.\n" : "create a day one day back.\n");
 
-        if (availableActions.contains(Actions.GOFORWARD)) {
-            message += "Press > to go forward one day\n";
-        } else {
-            message += "Press > to create a day one day forward.\n";
-        }
+        message += "Press > to " + (availableActions.contains(Actions.GOFORWARD)
+                ? "go forward one day.\n" : "create a day one day forward.\n");
 
         if (availableActions.contains(Actions.EDITSTATS)) {
             message += "Press 1 to edit mood 1.\n"
                     + "Press 2 to edit mood 2. \n"
                     + "Press 3 to edit sleep. \n";
+        }
+
+        if (availableActions.contains(Actions.SAVE)) {
+            message += "Press s to save to file.\n";
+        }
+
+        if (availableActions.contains(Actions.LOAD)) {
+            message += "Press l to save to file.\n";
+        }
+
+        if (availableActions.contains(Actions.DELETE)) {
+            message += "Press d to delete to file.\n";
         }
 
         if (availableActions.contains(Actions.EXPORT)) {
@@ -151,6 +186,10 @@ public class HealthIO {
 
         return message;
     }
+
+    /*
+        Handlers
+     */
 
     // EFFECTS: determines which command to run based on available actions and user input.
     //          Quit is always available, and other helper functions are called.
@@ -165,7 +204,7 @@ public class HealthIO {
 
         handleMovement(availableActions, s);
         handleUpdateValues(availableActions, s);
-        handleExport(availableActions, s);
+        handleIO(availableActions, s);
     }
 
     // MODIFIES: this, timeline
@@ -281,14 +320,44 @@ public class HealthIO {
         }
     }
 
+    private void handleIO(ArrayList<Actions> availableActions, String s) {
+        if (availableActions.contains(Actions.EXPORT) && s.equals("x")) {
+            saveToCSV();
+        } else if (availableActions.contains(Actions.SAVE) && s.equals("s")) {
+            saveTimeline();
+        } else if (availableActions.contains(Actions.LOAD) && s.equals("l")) {
+            loadTimeline();
+        } else if (availableActions.contains(Actions.DELETE) && s.equals("d")) {
+            // TODO: add deletion here
+        }
+    }
+
+    /*
+        Persistence
+     */
 
     // EFFECTS: gets a new CSV object from timeline, generates the csv string
     //          and then prints the result to the screen.
-    private void handleExport(ArrayList<Actions> availableActions, String s) {
-        if (availableActions.contains(Actions.EXPORT) && s.equals("x")) {
-            CSV exportCSV = timeline.getCSV();
-            exportCSV.convertListToString();
-            System.out.println(exportCSV.save());
+    private void saveToCSV() {
+        CSV exportCSV = timeline.getCSV();
+        exportCSV.convertListToString();
+        System.out.println(exportCSV.save());
+    }
+
+    // EFFECTS:
+    private void saveTimeline() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(timeline);
+            jsonWriter.close();
+            System.out.println("Saved timeline to " + JSONSTORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exist"); //TODO: add file creation
         }
     }
+
+    private void loadTimeline() {
+
+    }
+
 }
