@@ -11,6 +11,7 @@ import ui.enums.*;
 import ui.views.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -173,7 +174,7 @@ public class HealthIO {
         }
 
         if (availableActions.contains(Actions.LOAD)) {
-            message += "Press l to save to file.\n";
+            message += "Press l to load from file.\n";
         }
 
         if (availableActions.contains(Actions.DELETE)) {
@@ -353,6 +354,28 @@ public class HealthIO {
             System.out.println("Saved timeline to " + JSONSTORE);
         } catch (FileNotFoundException e) {
             System.out.println("File does not exist"); //TODO: add file creation
+        }
+    }
+
+    // EFFECTS:
+    private void saveTimeline() {
+        try {
+            jsonWriter.createFile();
+        } catch (IOException e) {
+            System.out.println("Unable to save to file: " + JSONSTORE);
+            return;
+        }
+
+        try {
+            jsonWriter.open();
+            jsonWriter.write(timeline);
+            jsonWriter.close();
+            System.out.println("Saved timeline to: " + JSONSTORE);
+        } catch (FileNotFoundException f) {
+            // This block should never run under ideal conditions,
+            // since we make sure the file exists above.
+
+            System.out.println("File does not exist at: " + JSONSTORE);
         }
     }
 

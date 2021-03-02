@@ -28,6 +28,12 @@ public class JsonWriter {
         writer.close();
     }
 
+    // EFFECTS: creates new file, returns true if creation was successful,
+    //          false if file already exists.
+    public boolean createFile() throws IOException {
+        return new File(path).createNewFile();
+    }
+
     private void saveToFile(String json) {
         writer.print(json);
     }
