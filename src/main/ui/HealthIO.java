@@ -330,7 +330,7 @@ public class HealthIO {
         } else if (availableActions.contains(Actions.LOAD) && s.equals("l")) {
             loadTimeline();
         } else if (availableActions.contains(Actions.DELETE) && s.equals("d")) {
-            // TODO: add deletion here
+            deleteTimeline();
         }
     }
 
@@ -379,4 +379,14 @@ public class HealthIO {
         }
     }
 
+    private void deleteTimeline() {
+        try {
+            jsonWriter.open();
+            jsonWriter.close();
+            timeline = new Timeline();
+            System.out.println("Deleted timeline at: " + JSONSTORE + "\nand created new one.");
+        } catch (FileNotFoundException f) {
+            System.out.println("Unable to delete timeline at: " + JSONSTORE);
+        }
+    }
 }
