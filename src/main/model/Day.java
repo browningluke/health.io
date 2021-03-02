@@ -31,6 +31,15 @@ public class Day implements Writable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new Day object and sets the values from parameters.
+    //          Used when loading data from json file.
+    public Day(DateCode id, int sleep, ArrayList<Mood> moods) {
+        dateCode = id;
+        sleepHours = sleep;
+        moodList = moods;
+    }
+
     // REQUIRES: 0 <= pos < moodList.size()
     // EFFECTS: returns a *reference* to a mood at position pos.
     //          The reference can be updated directly.
@@ -57,7 +66,6 @@ public class Day implements Writable {
 
         return jsonDay;
     }
-
 
     /*
         GETTERS AND SETTERS

@@ -14,48 +14,36 @@ import java.util.TimeZone;
 public class Timeline implements Writable {
 
     private ArrayList<Day> dayList;     // A list containing all days the user has created.
-    private final Calendar calendar;    // A Java Calendar for associating a Day with a date.
-    private final DateCode today;       // The DateCode representing today. Starting place for timeline.
+    private Calendar calendar;          // A Java Calendar for associating a Day with a date.
+    private DateCode today;             // The DateCode representing today. Starting place for timeline.
     private DateCode selectedDate;      // The DateCode for the selected date when moving around the timeline.
 
 
     // MODIFIES: this
-    // EFFECTS: creates a new timeline, attempts to load DayList (not yet implemented),
-    //          runs the setup function firstTimeCreate if load fails.
+    // EFFECTS: creates a new timeline, creates a Day object for today and tomorrow and
+    //          adds them to the DayList.
     public Timeline() {
-        calendar = Calendar.getInstance(TimeZone.getDefault());
-        today = generateDateCodeOfSelectedDate();
-        selectedDate = today;
-
-        dayList = loadDayList(); // dayList will always be null until loading is implemented.
-
-        //if (dayList == null) {
+        setupTimeline();
         dayList = new ArrayList<>();
-        firstTimeCreate();
-        //}
-    }
 
-    /*
-        Variable IO
-     */
-
-    // MODIFIES: this
-    // EFFECTS: creates a Day object for today and tomorrow and
-    //          adds them to the DayList
-    private void firstTimeCreate() {
+        // New Timeline
         addDay(new Day(today)); // Add today
         DateCode tomorrowDateCode = getDateCodeOneDayForward();
         addDay(new Day(tomorrowDateCode)); // Add tomorrow
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new Loader object (not yet implemented) and
-    //          returns an ArrayList of days (null for now).
-    private ArrayList<Day> loadDayList() {
-        Loader loader = new Loader();
-        return loader.load();
+    // EFFECTS: creates a new timeline, sets dayList from parameter. Used for loading from JSON.
+    public Timeline(ArrayList<Day> dayList) {
+        setupTimeline();
+        this.dayList = dayList;
     }
 
+    private void setupTimeline() {
+        calendar = Calendar.getInstance(TimeZone.getDefault());
+        today = generateDateCodeOfSelectedDate();
+        selectedDate = today;
+    }
 
     /*
         DayCodes and moving around the timeline

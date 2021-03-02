@@ -16,6 +16,16 @@ public class DateCode {
         this.year = year;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new DateCode instance by parsing a DateCode string (yyyy-mm-dd).
+    public DateCode(String dateCodeString) {
+        String[] dateCodeParts = dateCodeString.split("-");
+
+        year = Integer.parseInt(dateCodeParts[0]);
+        month = Integer.parseInt(dateCodeParts[1]);
+        date = Integer.parseInt(dateCodeParts[2]);
+    }
+
     // EFFECTS: returns true if two DateCodes point
     //          to the same date, false otherwise
     public boolean equals(DateCode dc) {
