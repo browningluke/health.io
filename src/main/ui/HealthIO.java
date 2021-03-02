@@ -6,6 +6,7 @@ import model.activities.Activity;
 import model.activities.DefaultActivities;
 import model.io.CSV;
 import model.io.Saver;
+import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.enums.*;
 import ui.views.*;
@@ -25,7 +26,7 @@ public class HealthIO {
     private Window currentWindow;                           // The currently selected window (combination of views).
 
     private JsonWriter jsonWriter;
-    //private JsonReader jsonReader;
+    private JsonReader jsonReader;
 
 
     // MODIFIES: this
@@ -35,7 +36,7 @@ public class HealthIO {
         currentWindow = Window.MAIN;
 
         jsonWriter = new JsonWriter(JSONSTORE);
-        //jsonReader = new JsonReader(JSONSTORE);
+        jsonReader = new JsonReader(JSONSTORE);
 
         runHealthIO();
     }
@@ -370,7 +371,12 @@ public class HealthIO {
     }
 
     private void loadTimeline() {
-
+        try {
+            timeline = jsonReader.read();
+            System.out.println("Loaded timeline from: " + JSONSTORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSONSTORE);
+        }
     }
 
 }
