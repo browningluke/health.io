@@ -78,8 +78,6 @@ public class JsonReader {
         ArrayList<Mood> moodList = new ArrayList<>();
         addMoods(moodList, jsonMoods);
 
-        assert moodList.size() <= Day.MAXMOODS;
-
         dayList.add(new Day(dc, sleep, moodList));
     }
 
