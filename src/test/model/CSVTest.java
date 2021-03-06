@@ -62,7 +62,7 @@ public class CSVTest {
 
         assertEquals(csvString1, csv.save());
 
-        DefaultActivities da = new DefaultActivities();
+        DefaultActivities da = DefaultActivities.getInstance();
         dayList.get(0).getMood(0).addActivity(
                 da.getActivity("Gaming"));
         dayList.get(0).getMood(0).addActivity(

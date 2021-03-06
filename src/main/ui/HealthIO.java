@@ -304,7 +304,7 @@ public class HealthIO {
         String[] activitiesList = activities.split(",");
 
         for (String s : activitiesList) {
-            Activity newActivity = new DefaultActivities().getActivity(s);
+            Activity newActivity = DefaultActivities.getInstance().getActivity(s);
 
             if (newActivity == null) {
                 System.out.println("You entered an invalid activity, try again.");

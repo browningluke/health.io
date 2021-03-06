@@ -117,7 +117,7 @@ public class JsonReader {
     private void addActivity(Mood mood, JSONObject jsonActivity) {
         String activityName = jsonActivity.getString("name");
 
-        Activity activity = new DefaultActivities()
+        Activity activity = DefaultActivities.getInstance()
                 .getActivity(activityName);
 
         mood.addActivity(activity);
