@@ -12,7 +12,7 @@ public class DefaultActivitiesTest {
 
     @BeforeEach
     void createDefaultActivities() {
-        da = new DefaultActivities();
+        da = DefaultActivities.getInstance();
     }
 
     @Test

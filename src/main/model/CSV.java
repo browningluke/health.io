@@ -1,6 +1,5 @@
-package model.io;
+package model;
 
-import model.Day;
 import model.activities.Activity;
 
 import java.util.ArrayList;

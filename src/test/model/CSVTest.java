@@ -1,9 +1,7 @@
-package model.io;
+package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import model.DateCode;
-import model.Day;
 import model.activities.DefaultActivities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,7 +62,7 @@ public class CSVTest {
 
         assertEquals(csvString1, csv.save());
 
-        DefaultActivities da = new DefaultActivities();
+        DefaultActivities da = DefaultActivities.getInstance();
         dayList.get(0).getMood(0).addActivity(
                 da.getActivity("Gaming"));
         dayList.get(0).getMood(0).addActivity(

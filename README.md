@@ -12,8 +12,13 @@ I began looking for a program that offered these features a few years ago out of
 
 ## User Stories
 
+[//]: # (Phase 1 user stories)
 - *As a user, I want to be able to* add a mood score and optional events twice a day to my timeline.
 - *As a user, I want to be able to* add new days to my timeline.
 - *As a user, I want to be able to* add the amount slept the night before.
 - *As a user, I want to be able to* visualize my mood and sleep data on a weekly graph.
 - *As a user, I want to be able to* export my data to csv format.
+
+[//]: # (Phase 2 user stories)
+- *As a user, I want to be able to* save my timeline - which includes all moods, activities and sleep values - to a file.
+- *As a user, I want to be able to* load my timeline from a file. 

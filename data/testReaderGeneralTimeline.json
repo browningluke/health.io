@@ -1,0 +1,51 @@
+{"timeline": [
+    {
+        "sleep": 10,
+        "moods": [
+            {
+                "score": 4,
+                "activities": []
+            },
+            {
+                "score": 2,
+                "activities": []
+            }
+        ],
+        "id": "2021-03-05"
+    },
+    {
+        "sleep": 4,
+        "moods": [
+            {
+                "score": 4,
+                "activities": []
+            },
+            {
+                "score": -1,
+                "activities": [{"name": "Gaming"}]
+            }
+        ],
+        "id": "2021-03-06"
+    },
+    {
+        "sleep": 8,
+        "moods": [
+            {
+                "score": 4,
+                "activities": [
+                    {"name": "Music"},
+                    {"name": "Party"},
+                    {"name": "Exercise"}
+                ]
+            },
+            {
+                "score": 1,
+                "activities": [
+                    {"name": "Music"},
+                    {"name": "Movie/TV"}
+                ]
+            }
+        ],
+        "id": "2021-03-07"
+    }
+]}

@@ -29,7 +29,7 @@ public class ActivitiesView implements View {
 
         int activityCounter = 3;
         panelString += "|    ";
-        for (Activity a : new DefaultActivities().getActivityList()) {
+        for (Activity a : DefaultActivities.getInstance().getActivityList()) {
             if (activityCounter == 0) {
                 activityCounter = 3;
                 panelString += "|\n|     ";
