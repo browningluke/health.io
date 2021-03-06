@@ -35,6 +35,11 @@ public class Timeline implements Writable {
     public Timeline(ArrayList<Day> dayList) {
         setupTimeline();
         this.dayList = dayList;
+
+        // Create today if user loads an old timeline json
+        if (getDay() == null) {
+            addDay(new Day(today));
+        }
     }
 
     // MODIFIES: this
