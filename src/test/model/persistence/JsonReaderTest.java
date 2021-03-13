@@ -1,10 +1,13 @@
 package model.persistence;
 
+import model.DateCode;
+import model.Day;
 import model.Timeline;
 import org.junit.jupiter.api.Test;
 import persistence.JsonReader;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,11 +27,19 @@ public class JsonReaderTest extends JsonTest {
     @Test
     void testReaderDefaultTimeline() {
         JsonReader jr = new JsonReader("./data/testReaderDefaultTimeline.json");
-        Timeline defaultTimeline = new Timeline();
+
+        DateCode d1 = new DateCode("2021-03-06");
+        DateCode d2 = new DateCode("2021-03-07");
+
+        ArrayList<Day> days = new ArrayList<>();
+        days.add(new Day(d1));
+        days.add(new Day(d2));
+
+        Timeline defaultTimeline = new Timeline(days);
 
         try {
             Timeline tl = jr.read();
-            ensureTimelinesAreEqual(defaultTimeline, tl);
+            ensureTimelinesAreEqual(defaultTimeline, tl, true, false);
             // Do NOT check if DateCodes are equal.
         } catch (IOException e) {
             fail("IOException should not have been thrown");
@@ -43,7 +54,7 @@ public class JsonReaderTest extends JsonTest {
 
         try {
             Timeline tl = jr.read();
-            ensureTimelinesAreEqual(defaultTimeline, tl);
+            ensureTimelinesAreEqual(defaultTimeline, tl, true, true);
             // Do NOT check if DateCodes are equal.
         } catch (IOException e) {
             fail("IOException should not have been thrown");

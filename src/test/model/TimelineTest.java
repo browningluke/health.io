@@ -28,6 +28,7 @@ public class TimelineTest {
         assertTrue(tl.contains(
                 tl.getSelectedDateCode()
         ));
+
         assertTrue(tl.contains(
                 tl.getDateCodeOneDayForward()
         ));

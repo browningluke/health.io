@@ -35,7 +35,7 @@ public class JsonWriterTest extends JsonTest {
             JsonReader jr = new JsonReader("./data/testWriterDefaultTimeline.json");
             Timeline loadedTimeline = jr.read();
 
-            ensureTimelinesAreEqual(tl, loadedTimeline);
+            ensureTimelinesAreEqual(tl, loadedTimeline, false, false);
 
             // Ensure DateCodes are equal
             assertEquals(
@@ -62,7 +62,7 @@ public class JsonWriterTest extends JsonTest {
             JsonReader jr = new JsonReader("./data/testWriterGeneralTimeline.json");
             Timeline loadedTimeline = jr.read();
 
-            ensureTimelinesAreEqual(generalTimeline, loadedTimeline);
+            ensureTimelinesAreEqual(generalTimeline, loadedTimeline, false, true);
 
             // Ensure DateCodes are equal
             assertEquals(

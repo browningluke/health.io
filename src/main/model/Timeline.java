@@ -4,14 +4,12 @@ import org.json.JSONArray;
 import persistence.Writable;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.*;
 
 // Represents a timeline that associates a list of days with a human calendar.
 public class Timeline implements Writable {
 
-    private ArrayList<Day> dayList;     // A list containing all days the user has created.
+    private Map<DateCode, Day> dayMap;  // A map associating a DateCodes to days the user has created.
     private Calendar calendar;          // A Java Calendar for associating a Day with a date.
     private DateCode today;             // The DateCode representing today. Starting place for timeline.
     private DateCode selectedDate;      // The DateCode for the selected date when moving around the timeline.
@@ -22,7 +20,6 @@ public class Timeline implements Writable {
     //          adds them to the DayList.
     public Timeline() {
         setupTimeline();
-        dayList = new ArrayList<>();
 
         // New Timeline
         addDay(new Day(today)); // Add today
@@ -34,7 +31,10 @@ public class Timeline implements Writable {
     // EFFECTS: creates a new timeline, sets dayList from parameter. Used for loading from JSON.
     public Timeline(ArrayList<Day> dayList) {
         setupTimeline();
-        this.dayList = dayList;
+
+        for (Day d : dayList) {
+            dayMap.put(d.getDateCode(), d);
+        }
 
         // Create today if user loads an old timeline json
         if (getDay() == null) {
@@ -50,6 +50,7 @@ public class Timeline implements Writable {
         calendar = Calendar.getInstance(TimeZone.getDefault());
         today = generateDateCodeOfSelectedDate();
         selectedDate = today;
+        dayMap = new LinkedHashMap<>();
     }
 
     /*
@@ -91,7 +92,7 @@ public class Timeline implements Writable {
     // EFFECTS: creates a new day and adds it to the front of dayList
     public void createDayOneDayBack() {
         DateCode dateCodeOneDayBack = getDateCodeOneDayBack();
-        dayList.add(0, new Day(dateCodeOneDayBack));
+        dayMap.put(dateCodeOneDayBack, new Day(dateCodeOneDayBack));
     }
 
     // REQUIRES: !canGoForwardOneDay
@@ -99,7 +100,7 @@ public class Timeline implements Writable {
     // EFFECTS: creates a new day and adds it to the end of dayList
     public void createDayOneDayForward() {
         DateCode dateCodeOneDayForward = getDateCodeOneDayForward();
-        dayList.add(new Day(dateCodeOneDayForward));
+        dayMap.put(dateCodeOneDayForward, new Day(dateCodeOneDayForward));
     }
 
     // Moving around
@@ -149,31 +150,20 @@ public class Timeline implements Writable {
     // MODIFIES: this
     // EFFECTS: add a new day to the dayList.
     public void addDay(Day newDay) {
-        dayList.add(newDay);
+        dayMap.put(newDay.getDateCode(), newDay);
     }
 
     // EFFECTS: returns a *reference* to a day, which can then be changed.
     //          returns null if there is no date with such a DayCode.
     public Day getDay(DateCode dc) {
-        for (Day d : dayList) {
-            if (d.getDateCode().equals(dc)) {
-                return d;
-            }
-        }
-        return null;
+        return dayMap.get(dc);
     }
 
     // REQUIRES: contains(selectedDate) is true
     // EFFECTS: returns a *reference* to the currently selected date.
     //          returns null if there is no date with such a DayCode.
     public Day getDay() {
-        Day selectedDay = null;
-        for (Day d : dayList) {
-            if (d.getDateCode().equals(selectedDate)) {
-                selectedDay = d;
-            }
-        }
-        return selectedDay;
+        return dayMap.get(selectedDate);
     }
 
     // EFFECTS: returns a list containing all Day instances in the current week.
@@ -229,7 +219,7 @@ public class Timeline implements Writable {
 
         JSONArray jsonDays = new JSONArray();
 
-        for (Day d : dayList) {
+        for (Day d : dayMap.values()) {
             jsonDays.put(d.toJson());
         }
 
@@ -245,23 +235,18 @@ public class Timeline implements Writable {
 
     // EFFECTS: returns an exported CSV object
     public CSV getCSV() {
-        return new CSV(dayList);
+        return new CSV(dayMap.values());
     }
 
     // EFFECTS: returns the size of the dayList.
     public int getDayListLength() {
-        return dayList.size();
+        return dayMap.size();
     }
 
     // EFFECTS: searches for Day with specified DateCode, returns true if found,
     //          else otherwise.
     public boolean contains(DateCode dc) {
-        for (Day d : dayList) {
-            if (d.getDateCode().equals(dc)) {
-                return true;
-            }
-        }
-        return false;
+        return dayMap.containsKey(dc);
     }
 
 }

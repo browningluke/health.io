@@ -8,11 +8,13 @@ public class DateCodeTest {
 
     DateCode d1;
     DateCode d2;
+    DateCode d3;
 
     @BeforeEach
     void createDateCode() {
         d1 = new DateCode(2020, 2, 1);
         d2 = new DateCode(2021, 6, 5);
+        d3 = new DateCode(2020, 2, 1);
     }
 
     @Test
@@ -61,13 +63,15 @@ public class DateCodeTest {
     }
 
     @Test
-    void testEqualsEqual() {
-        DateCode d3 = new DateCode(2020, 2, 1);
-
+    void testDateCodeEquals() {
+        assertTrue(d1.equals(d1));
         assertTrue(d1.equals(d3));
+        assertTrue(d3.equals(d3));
         assertTrue(d3.equals(d1));
-        assertFalse(d2.equals(d3));
-        assertFalse(d3.equals(d2));
+        assertFalse(d1.equals(null));
+        assertFalse(d1.equals(1));
+        assertFalse(d3.equals(1));
+        assertFalse(d3.equals(1));
     }
 
     @Test

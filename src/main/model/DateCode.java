@@ -26,11 +26,31 @@ public class DateCode {
         date = Integer.parseInt(dateCodeParts[2]);
     }
 
-    // EFFECTS: returns true if two DateCodes point
-    //          to the same date, false otherwise
-    public boolean equals(DateCode dc) {
+    @Override
+    public int hashCode() {
+        return (10000 * year) + (100 * month) + date;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        DateCode dc = (DateCode) obj;
+
         return dc.date == date && dc.month == month && dc.year == year;
     }
+
+    // EFFECTS: returns true if two DateCodes point
+    //          to the same date, false otherwise
+//    public boolean equals(DateCode dc) {
+//        return dc.date == date && dc.month == month && dc.year == year;
+//    }
 
     // EFFECTS: returns the full DateCode converted to a string,
     //          using the following pattern: yyyy-mm-dd
