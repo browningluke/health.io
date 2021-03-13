@@ -27,11 +27,15 @@ public class DateCode {
     }
 
     @Override
+    // EFFECTS: returns the hashCode of this object, calculated to be an integer but look like yyyymmdd.
     public int hashCode() {
         return (10000 * year) + (100 * month) + date;
     }
 
     @Override
+    // EFFECTS: returns the true if obj is equal to this object.
+    //          true if obj is the same object or all id variables (date, month, year)
+    //          are the the same for both this and obj.
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -45,12 +49,6 @@ public class DateCode {
 
         return dc.date == date && dc.month == month && dc.year == year;
     }
-
-    // EFFECTS: returns true if two DateCodes point
-    //          to the same date, false otherwise
-//    public boolean equals(DateCode dc) {
-//        return dc.date == date && dc.month == month && dc.year == year;
-//    }
 
     // EFFECTS: returns the full DateCode converted to a string,
     //          using the following pattern: yyyy-mm-dd
