@@ -11,6 +11,7 @@ import java.util.List;
 public class Day implements Writable {
 
     public static final int MAXMOODS = 2;   // Number of moods per day.
+    public static final int MAXSLEEP = 16;  // Max number user can enter for sleep value.
 
     private final DateCode dateCode;        // The unique ID for this day.
     private List<Mood> moodList;            // The list containing the moods. Should contain 2
@@ -86,6 +87,7 @@ public class Day implements Writable {
         return sleepHours;
     }
 
+    // REQUIRES: sh <= MAXSLEEP
     // EFFECTS: updates sleepHours value with sh.
     public void setSleepHours(int sh) {
         sleepHours = sh;
