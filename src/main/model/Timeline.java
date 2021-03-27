@@ -1,6 +1,7 @@
 package model;
 
 import org.json.JSONArray;
+import persistence.CsvWriter;
 import persistence.Writable;
 import org.json.JSONObject;
 
@@ -234,8 +235,8 @@ public class Timeline implements Writable {
      */
 
     // EFFECTS: returns an exported CSV object
-    public CSV getCSV() {
-        return new CSV(dayMap.values());
+    public CsvWriter getCsvWriter() {
+        return new CsvWriter(dayMap.values());
     }
 
     // EFFECTS: returns the size of the dayList.

@@ -2,8 +2,10 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import model.persistence.CsvWriterTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.CsvWriter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -156,17 +158,27 @@ public class TimelineTest {
     }
 
     @Test
-    void testGetCSV() {
-        String csvString = CSVTest.CSVHEADER
+    void testGetCsvWriter() {
+        String csvString = CsvWriterTest.CSVHEADER
                          + "%s, x, x, x, , \n"
                          + "%s, x, x, x, , \n";
 
-        CSV csv = tl.getCSV();
+        CsvWriter csv = tl.getCsvWriter();
         csv.convertListToString();
-        assertEquals(String.format(csvString,
-                tl.getSelectedDateCode().toString(),
-                tl.getDateCodeOneDayForward().toString()), csv.save());
+        try {
+            csv.open("./data/timeline.csv");
+            csv.write();
+            csv.close();
+        } catch (IOException e) {
+            fail();
+        }
+        assertTrue(new File("./data/timeline.csv").exists());
 
+        String csvStringFilled = String.format(csvString,
+                tl.getSelectedDateCode().toString(),
+                tl.getDateCodeOneDayForward().toString());
+
+        assertEquals(csvStringFilled, csv.getCsvString());
     }
 
     @Test
