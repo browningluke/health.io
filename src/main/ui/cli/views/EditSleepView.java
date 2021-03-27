@@ -1,7 +1,7 @@
-package ui.views;
+package ui.cli.views;
 
 import model.Timeline;
-import ui.enums.SelectedStat;
+import ui.cli.enums.SelectedStat;
 
 // The View allowing a user to edit the sleep value of the currently selected day.
 public class EditSleepView extends AbstractView {

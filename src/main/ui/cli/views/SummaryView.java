@@ -1,9 +1,9 @@
-package ui.views;
+package ui.cli.views;
 
 import model.DateCode;
 import model.Day;
 import model.Timeline;
-import ui.enums.SelectedStat;
+import ui.cli.enums.SelectedStat;
 
 import java.util.ArrayList;
 

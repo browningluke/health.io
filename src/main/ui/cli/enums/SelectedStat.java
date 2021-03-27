@@ -1,4 +1,4 @@
-package ui.enums;
+package ui.cli.enums;
 
 // Represents the stat that the user selected.
 public enum SelectedStat {

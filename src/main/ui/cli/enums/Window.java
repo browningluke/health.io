@@ -1,4 +1,4 @@
-package ui.enums;
+package ui.cli.enums;
 
 // Represents the windows that the program can be in.
 public enum Window {

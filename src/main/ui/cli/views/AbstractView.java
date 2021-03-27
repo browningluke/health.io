@@ -1,10 +1,10 @@
-package ui.views;
+package ui.cli.views;
 
 import model.DateCode;
 import model.Mood;
 import model.Timeline;
-import ui.HealthIO;
-import ui.enums.SelectedStat;
+import ui.cli.HealthIOcli;
+import ui.cli.enums.SelectedStat;
 
 // A View that draws the header for all subclasses. Displays stat values and selected stat.
 public abstract class AbstractView implements View {
@@ -32,7 +32,7 @@ public abstract class AbstractView implements View {
                            + handleSelectedStat();
         panelString += "|----------------------------------------|";
 
-        return String.format(panelString, HealthIO.PROJECTNAME);
+        return String.format(panelString, HealthIOcli.PROJECTNAME);
     }
 
     // EFFECTS: returns a different string depending on which stat is selected.
