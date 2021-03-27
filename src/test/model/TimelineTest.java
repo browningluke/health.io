@@ -7,9 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.CsvWriter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.io.File;
+import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.*;
 
 public class TimelineTest {
 
@@ -204,6 +207,16 @@ public class TimelineTest {
         tl.createDayOneDayForward();
         assertEquals(3, tl.getDayListLength());
         assertTrue(tl.contains(dateCodeOneDayForward));
+    }
+
+    @Test
+    void testGetDayOfWeek() {
+        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
+        assertTrue(Arrays.stream(days).anyMatch(n -> n.equals(tl.getDayOfWeek())));
+        LocalDate date = LocalDate.now();
+        DayOfWeek dow = date.getDayOfWeek();
+        assertEquals(dow.getDisplayName(TextStyle.FULL, Locale.ENGLISH), tl.getDayOfWeek());
     }
 
 }

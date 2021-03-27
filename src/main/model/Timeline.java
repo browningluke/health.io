@@ -5,6 +5,7 @@ import persistence.CsvWriter;
 import persistence.Writable;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 // Represents a timeline that associates a list of days with a human calendar.
@@ -250,4 +251,8 @@ public class Timeline implements Writable {
         return dayMap.containsKey(dc);
     }
 
+    // EFFECTS: returns the name (eg. Monday) of the selected day.
+    public String getDayOfWeek() {
+        return new SimpleDateFormat("EEEE").format(calendar.getTime());
+    }
 }
