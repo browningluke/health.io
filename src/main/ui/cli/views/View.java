@@ -1,4 +1,4 @@
-package ui.views;
+package ui.cli.views;
 
 // Represents the bare minimum a view must implement.
 public interface View {

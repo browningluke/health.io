@@ -2,12 +2,17 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import model.persistence.CsvWriterTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.CsvWriter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.io.File;
+import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.*;
 
 public class TimelineTest {
 
@@ -156,17 +161,27 @@ public class TimelineTest {
     }
 
     @Test
-    void testGetCSV() {
-        String csvString = CSVTest.CSVHEADER
+    void testGetCsvWriter() {
+        String csvString = CsvWriterTest.CSVHEADER
                          + "%s, x, x, x, , \n"
                          + "%s, x, x, x, , \n";
 
-        CSV csv = tl.getCSV();
+        CsvWriter csv = tl.getCsvWriter();
         csv.convertListToString();
-        assertEquals(String.format(csvString,
-                tl.getSelectedDateCode().toString(),
-                tl.getDateCodeOneDayForward().toString()), csv.save());
+        try {
+            csv.open("./data/timeline.csv");
+            csv.write();
+            csv.close();
+        } catch (IOException e) {
+            fail();
+        }
+        assertTrue(new File("./data/timeline.csv").exists());
 
+        String csvStringFilled = String.format(csvString,
+                tl.getSelectedDateCode().toString(),
+                tl.getDateCodeOneDayForward().toString());
+
+        assertEquals(csvStringFilled, csv.getCsvString());
     }
 
     @Test
@@ -192,6 +207,16 @@ public class TimelineTest {
         tl.createDayOneDayForward();
         assertEquals(3, tl.getDayListLength());
         assertTrue(tl.contains(dateCodeOneDayForward));
+    }
+
+    @Test
+    void testGetDayOfWeek() {
+        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
+        assertTrue(Arrays.stream(days).anyMatch(n -> n.equals(tl.getDayOfWeek())));
+        LocalDate date = LocalDate.now();
+        DayOfWeek dow = date.getDayOfWeek();
+        assertEquals(dow.getDisplayName(TextStyle.FULL, Locale.ENGLISH), tl.getDayOfWeek());
     }
 
 }

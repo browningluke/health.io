@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Mood implements Writable {
 
     public static final int MAXMOODSCORE = 5;   // The max value that the moodScore can be
+    public static final int MINMOODSCORE = 1;   // The min value that the moodScore can be
 
     private int moodScore;                      // The current mood score for this Mood.
     private ArrayList<Activity> activityList;   // The list of activities for this Mood.
@@ -102,6 +103,7 @@ public class Mood implements Writable {
         return activityList.size();
     }
 
+    // REQUIRES: ms <= MAXMOODSCORE && ms >= MINMOODSCORE
     // MODIFIES: this
     // EFFECTS: returns moodScore value.
     public void setMoodScore(int ms) {

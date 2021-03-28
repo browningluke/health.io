@@ -1,19 +1,23 @@
-package model;
+package persistence;
 
+import model.Day;
 import model.activities.Activity;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Collection;
 
 // Represents a CSV parser that can convert a list of days to a valid CSV string.
-public class CSV {
+public class CsvWriter {
 
     private final Collection<Day> dayList;   // Contains the list of days to export.
-    private String csvString;               // Contains the valid exported CSV string.
+    private String csvString;                // Contains the valid exported CSV string.
+    private PrintWriter writer;              // The writer object.
 
     // MODIFIES: this
     // EFFECTS: creates a new CSV instance with access to the entire dayList.
-    public CSV(Collection<Day> dayList) {
+    public CsvWriter(Collection<Day> dayList) {
         this.dayList = dayList;
     }
 
@@ -46,8 +50,25 @@ public class CSV {
 
     // EFFECTS: desired action: saves the csvString to file at a path.
     //          temporary action: returns the string to be printed
-    public String save() {
-        return csvString;
+    public void write() {
+        writer.print(csvString);
     }
 
+    // MODIFIES: this
+    // EFFECTS: opens the writer at the specified path.
+    //          Throws FileNotFoundException if file at path cannot be opened.
+    public void open(String path) throws FileNotFoundException {
+        writer = new PrintWriter(new File(path));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: closes the writer.
+    public void close() {
+        writer.close();
+    }
+
+    // EFFECTS: returns the raw csv string representing the dayList
+    public String getCsvString() {
+        return csvString;
+    }
 }

@@ -1,8 +1,8 @@
-package ui.views;
+package ui.cli.views;
 
 import model.Mood;
 import model.Timeline;
-import ui.enums.SelectedStat;
+import ui.cli.enums.SelectedStat;
 
 // The View allowing a user to edit the selected mood value of the currently selected day.
 public class EditMoodView extends AbstractView {

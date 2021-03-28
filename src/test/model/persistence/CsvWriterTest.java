@@ -1,18 +1,23 @@
-package model;
+package model.persistence;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import model.DateCode;
+import model.Day;
 import model.activities.DefaultActivities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.CsvWriter;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class CSVTest {
+public class CsvWriterTest {
 
     public static final String CSVHEADER = "date, mood1, mood2, sleep-time, mood1-activities, mood2-activities\n";
 
-    CSV csv;
+    CsvWriter csv;
     ArrayList<Day> dayList;
 
     @BeforeEach
@@ -23,7 +28,20 @@ public class CSVTest {
         dayList.add(new Day(
                 new DateCode(2020, 11, 13)));
 
-        csv = new CSV(dayList);
+        csv = new CsvWriter(dayList);
+    }
+
+    @Test
+    void testSaveToFile() {
+        csv.convertListToString();
+        try {
+            csv.open("./data/timeline-test.csv");
+            csv.write();
+            csv.close();
+        } catch (IOException e) {
+            fail();
+        }
+        assertTrue(new File("./data/timeline-test.csv").exists());
     }
 
     @Test
@@ -32,7 +50,7 @@ public class CSVTest {
         String csvString1 = CSVHEADER + "2020-11-12, x, x, x, , \n"
                           + "2020-11-13, x, x, x, , \n";
 
-        assertEquals(csvString1, csv.save());
+        assertEquals(csvString1, csv.getCsvString());
 
         dayList.get(0).setSleepHours(5);
         dayList.get(0).getMood(0).setMoodScore(4);
@@ -41,7 +59,7 @@ public class CSVTest {
                 + "2020-11-13, x, x, x, , \n";
 
         csv.convertListToString();
-        assertEquals(csvString2, csv.save());
+        assertEquals(csvString2, csv.getCsvString());
 
         dayList.get(1).setSleepHours(8);
         dayList.get(1).getMood(1).setMoodScore(2);
@@ -49,7 +67,7 @@ public class CSVTest {
                 + "2020-11-13, x, 2, 8, , \n";
 
         csv.convertListToString();
-        assertEquals(csvString3, csv.save());
+        assertEquals(csvString3, csv.getCsvString());
 
 
     }
@@ -60,7 +78,7 @@ public class CSVTest {
         String csvString1 = CSVHEADER + "2020-11-12, x, x, x, , \n"
                 + "2020-11-13, x, x, x, , \n";
 
-        assertEquals(csvString1, csv.save());
+        assertEquals(csvString1, csv.getCsvString());
 
         DefaultActivities da = DefaultActivities.getInstance();
         dayList.get(0).getMood(0).addActivity(
@@ -74,7 +92,7 @@ public class CSVTest {
                 + "2020-11-13, x, x, x, , \n";
 
 
-        assertEquals(csvString2, csv.save());
+        assertEquals(csvString2, csv.getCsvString());
 
         dayList.get(1).getMood(0).addActivity(
                 da.getActivity("Friends"));
@@ -88,7 +106,7 @@ public class CSVTest {
         String csvString3 = CSVHEADER + "2020-11-12, x, x, x, Gaming;Friends;, \n"
                 + "2020-11-13, x, x, x, Friends;, Party;Music;\n";
 
-        assertEquals(csvString3, csv.save());
+        assertEquals(csvString3, csv.getCsvString());
 
     }
 

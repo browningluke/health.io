@@ -1,4 +1,4 @@
-package ui.enums;
+package ui.cli.enums;
 
 // Represents the actions a user can take at any specific time.
 public enum Actions {

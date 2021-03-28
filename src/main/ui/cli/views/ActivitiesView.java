@@ -1,4 +1,4 @@
-package ui.views;
+package ui.cli.views;
 
 import model.Mood;
 import model.activities.Activity;
