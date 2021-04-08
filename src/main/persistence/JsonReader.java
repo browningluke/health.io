@@ -37,7 +37,7 @@ public class JsonReader {
         return parseTimeline(jsonObject);
     }
 
-    // CITATION: this method was taken from the CPSC210 JsonSerializationDemo project.
+    // CITATION: this method was taken from the CPSC2xx JsonSerializationDemo project.
     // EFFECTS: returns the string read from the file located at specified path.
     private String readFile(String path) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();

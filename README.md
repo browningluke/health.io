@@ -8,7 +8,7 @@ This program aims to target two main types of people:
 - Those who have suffered/do suffer with varying moods, depression, any other mental health issue. 
 - Those who like to micromanage and log as many aspects of their lives as they can.
 
-I began looking for a program that offered these features a few years ago out of willingness to log and organize as many aspects of my life as I could, as well as a mild curiosity as to how my mental health progressed over time. However, since the outbreak of Covid-19, I have found myself experiencing a much greater range of moods than I did before, and would now greatly benefit from being able to track my moods, and the events linked to them, over a period of time. Since I have a few friends who have also had their mental health deteriorate as a result of the pandemic, I thought that I would take the opportunity to create this program I want as my *CPSC 210* project.
+I began looking for a program that offered these features a few years ago out of willingness to log and organize as many aspects of my life as I could, as well as a mild curiosity as to how my mental health progressed over time. However, since the outbreak of Covid-19, I have found myself experiencing a much greater range of moods than I did before, and would now greatly benefit from being able to track my moods, and the events linked to them, over a period of time. Since I have a few friends who have also had their mental health deteriorate as a result of the pandemic, I thought that I would take the opportunity to create this program I want as my *CPSC 2xx* project.
 
 ## User Stories
 
